@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { getByTestId, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 
 import Routing from "./Routing";
 import TEST_ID from "./testids";
@@ -15,11 +16,50 @@ import TEST_ID from "./testids";
  */
 
 describe("Routing", () => {
-  it("Goes to the home page on /", () => {});
+  it("Goes to the home page on /", () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Routing />
+      </MemoryRouter>
+    );
 
-  it("Goes to the users page on /users", () => {});
+    expect(screen.getByTestId(TEST_ID.HOME_CONTAINER)).toBeInTheDocument();
+  });
 
-  it("Goes to the user details page on /users/:id", () => {});
+  it("Goes to the users page on /users", () => {
+    render(
+      <MemoryRouter initialEntries={["/users"]}>
+        <Routing />
+      </MemoryRouter>
+    );
 
-  it("Goes to the home page if the url is not recognized", () => {});
+    expect(screen.getByTestId(TEST_ID.USER_LIST_CONTAINER)).toBeInTheDocument();
+  });
+
+  it("Goes to the user details page on /users/:id", () => {
+    render(
+      <MemoryRouter initialEntries={["/users/John"]}>
+        <Routing />
+      </MemoryRouter>
+    );
+
+    expect(
+      screen.getByTestId(TEST_ID.USER_DETAILS_CONTAINER)
+    ).toBeInTheDocument();
+
+    expect(screen.getByTestId(TEST_ID.USER_DETAILS_CONTAINER)).toHaveAttribute(
+      "data-testelementid",
+      "John"
+    );
+  });
+
+  it("Goes to the home page if the url is not recognized", () => {
+    render(
+      <MemoryRouter initialEntries={["/random"]}>
+        <Routing />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId(TEST_ID.HOME_CONTAINER)).toBeInTheDocument();
+  });
 });
