@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { getByTestId, render, screen } from "@testing-library/react";
 
 import UserListItem from "./1-UserListItem";
 
@@ -18,7 +18,8 @@ const testUser = {
 
 describe("UserListItem", () => {
   it("Displays all of the fields ", () => {
-    // TODO: FILL THIS IN
-    expect(true).toBe(false);
+    render(UserListItem({ user: testUser }));
+
+    expect(screen.getByText("John Doe (Admin)")).toBeVisible();
   });
 });
