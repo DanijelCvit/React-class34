@@ -55,6 +55,6 @@ describe("UserDetailsForm", () => {
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
 
-    expect(onSubmit.mock.calls[0][0]).toEqual(testUser);
+    expect(onSubmit).toHaveBeenCalledWith(testUser);
   });
 });
