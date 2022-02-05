@@ -18,7 +18,7 @@ const testUser = {
 
 describe("UserListItem", () => {
   it("Displays all of the fields ", () => {
-    render(UserListItem({ user: testUser }));
+    render(<UserListItem user={testUser} />);
 
     expect(screen.getByText("John Doe (Admin)")).toBeVisible();
   });

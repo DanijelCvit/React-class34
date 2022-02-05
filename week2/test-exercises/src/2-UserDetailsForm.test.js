@@ -24,18 +24,37 @@ const changedUser = {
 
 describe("UserDetailsForm", () => {
   it("Correctly fills in the initial values", () => {
-    // TODO: Fill in!
-    expect(true).toBe(false);
+    render(<UserDetailsForm initialUserValues={testUser} />);
+
+    for (const key in testUser) {
+      expect(screen.getByDisplayValue(testUser[key])).toBeInTheDocument();
+    }
   });
 
   it("Correctly changes a fields value", () => {
-    // TODO: Fill in!
-    expect(true).toBe(false);
+    render(<UserDetailsForm initialUserValues={testUser} />);
+
+    for (const key in changedUser) {
+      fireEvent.change(screen.getByDisplayValue(testUser[key]), {
+        target: { value: changedUser[key] },
+      });
+      expect(screen.getByDisplayValue(changedUser[key])).toBeInTheDocument();
+    }
   });
 
   it("Submits the right values to the onSubmit function", () => {
-    // TODO: Fill in!
     // TIP: You will need to mock the onSubmit function prop so you can check that it was called and what it was called with! Have a look at `jest.fn`
-    expect(true).toBe(false);
+
+    const onSubmit = jest.fn();
+
+    render(
+      <UserDetailsForm initialUserValues={testUser} onSubmit={onSubmit} />
+    );
+
+    fireEvent.click(screen.getByRole("button"));
+
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+
+    expect(onSubmit.mock.calls[0][0]).toEqual(testUser);
   });
 });
