@@ -37,20 +37,20 @@ describe("Routing", () => {
   });
 
   it("Goes to the user details page on /users/:id", () => {
+    const id = "John";
+
     render(
-      <MemoryRouter initialEntries={["/users/John"]}>
+      <MemoryRouter initialEntries={[`/users/${id}`]}>
         <Routing />
       </MemoryRouter>
     );
 
-    expect(
-      screen.getByTestId(TEST_ID.USER_DETAILS_CONTAINER)
-    ).toBeInTheDocument();
-
-    expect(screen.getByTestId(TEST_ID.USER_DETAILS_CONTAINER)).toHaveAttribute(
-      "data-testelementid",
-      "John"
+    const userDetailsContainer = screen.getByTestId(
+      TEST_ID.USER_DETAILS_CONTAINER
     );
+    expect(userDetailsContainer).toBeInTheDocument();
+
+    expect(userDetailsContainer).toHaveAttribute("data-testelementid", id);
   });
 
   it("Goes to the home page if the url is not recognized", () => {
