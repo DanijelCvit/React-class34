@@ -53,11 +53,76 @@ function TestComponent({ userToLogin }) {
 }
 
 describe("LoggedInUserContext", () => {
-  it("Correctly sets the user as loggedIn if an initialUser is given", () => {});
+  it("Correctly sets the user as loggedIn if an initialUser is given", () => {
+    const user = { name: "Danijel" };
 
-  it("Correctly sets the user as logged out if no initialUser is given", () => {});
+    render(
+      <LoggedInUserContextProvider initialUser={user}>
+        <TestComponent />
+      </LoggedInUserContextProvider>
+    );
 
-  it("logs the user in if you use the login function", () => {});
+    const loggedInUser = screen.getByTestId(TEST_ID.LOGGED_IN_USER);
+    expect(loggedInUser).toBeInTheDocument();
+    expect(loggedInUser).toHaveAttribute("data-value", JSON.stringify(user));
 
-  it("logs the user out if you use the logout function", () => {});
+    const isLoggedIn = screen.getByTestId(TEST_ID.IS_LOGGED_IN);
+    expect(isLoggedIn).toBeInTheDocument();
+    expect(isLoggedIn).toHaveAttribute("data-value", "true");
+  });
+
+  it("Correctly sets the user as logged out if no initialUser is given", () => {
+    render(
+      <LoggedInUserContextProvider>
+        <TestComponent />
+      </LoggedInUserContextProvider>
+    );
+
+    const loggedInUser = screen.getByTestId(TEST_ID.LOGGED_IN_USER);
+    expect(loggedInUser).toBeInTheDocument();
+    expect(loggedInUser).toHaveAttribute("data-value", "null");
+
+    const isLoggedIn = screen.getByTestId(TEST_ID.IS_LOGGED_IN);
+    expect(isLoggedIn).toBeInTheDocument();
+    expect(isLoggedIn).toHaveAttribute("data-value", "false");
+  });
+
+  it("logs the user in if you use the login function", () => {
+    const user = { name: "Danijel" };
+
+    render(
+      <LoggedInUserContextProvider>
+        <TestComponent userToLogin={user} />
+      </LoggedInUserContextProvider>
+    );
+
+    const loginButton = screen.getByTestId(TEST_ID.LOGIN);
+    fireEvent.click(loginButton);
+
+    const loggedInUser = screen.getByTestId(TEST_ID.LOGGED_IN_USER);
+    expect(loggedInUser).toBeInTheDocument();
+    expect(loggedInUser).toHaveAttribute("data-value", JSON.stringify(user));
+
+    const isLoggedIn = screen.getByTestId(TEST_ID.IS_LOGGED_IN);
+    expect(isLoggedIn).toBeInTheDocument();
+    expect(isLoggedIn).toHaveAttribute("data-value", "true");
+  });
+
+  it("logs the user out if you use the logout function", () => {
+    const user = { name: "Danijel" };
+
+    render(
+      <LoggedInUserContextProvider initialUser={user}>
+        <TestComponent />
+      </LoggedInUserContextProvider>
+    );
+
+    const isLoggedIn = screen.getByTestId(TEST_ID.IS_LOGGED_IN);
+    expect(isLoggedIn).toBeInTheDocument();
+    expect(isLoggedIn).toHaveAttribute("data-value", "true");
+
+    const logoutButton = screen.getByTestId(TEST_ID.LOGOUT);
+    fireEvent.click(logoutButton);
+    expect(isLoggedIn).toHaveAttribute("data-value", "false");
+  });
 });
