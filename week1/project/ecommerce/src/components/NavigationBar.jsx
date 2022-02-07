@@ -14,7 +14,7 @@ const NavigationBar = ({ category, setCategory }) => {
               categoryItem={categoryItem}
             />
           </li>
-        ))}{" "}
+        ))}
       </ul>
     </nav>
   );
