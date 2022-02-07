@@ -2,7 +2,7 @@ import React from "react";
 
 const Spinner = () => {
   return (
-    <div className="absolute inset-1/2">
+    <div className="absolute inset-1/2 z-50">
       <svg
         role="status"
         className="w-12 h-12 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600"

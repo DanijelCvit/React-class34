@@ -12,8 +12,6 @@ const ProductDetails = () => {
     isLoading,
   } = useFetch(`https://fakestoreapi.com/products/${id}`);
 
-  console.log(product);
-
   return (
     <div className="container mx-auto px-2">
       {isLoading && <Spinner />}
