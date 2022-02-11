@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const ProductCard = ({ product }) => (
   <div className="text-center mt-6">
@@ -12,5 +13,9 @@ const ProductCard = ({ product }) => (
     </h2>
   </div>
 );
+
+ProductCard.propTypes = {
+  product: PropTypes.object,
+};
 
 export default ProductCard;

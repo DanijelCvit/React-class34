@@ -1,5 +1,6 @@
 import ProductCard from "./ProductCard.jsx";
 import Spinner from "./Spinner.jsx";
+import PropTypes from "prop-types";
 
 const ProductsList = ({ products, isLoading, errorMessage }) => (
   <div>
@@ -16,5 +17,11 @@ const ProductsList = ({ products, isLoading, errorMessage }) => (
     {errorMessage}
   </div>
 );
+
+ProductsList.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  products: PropTypes.array,
+  errorMessage: PropTypes.string,
+};
 
 export default ProductsList;

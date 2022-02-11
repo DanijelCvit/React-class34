@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Button = ({ categoryItem, setCategory, category }) => (
   <button
@@ -10,5 +11,11 @@ const Button = ({ categoryItem, setCategory, category }) => (
     {categoryItem}
   </button>
 );
+
+Button.propTypes = {
+  category: PropTypes.string,
+  categoryItem: PropTypes.string.isRequired,
+  setCategory: PropTypes.func.isRequired,
+};
 
 export default Button;

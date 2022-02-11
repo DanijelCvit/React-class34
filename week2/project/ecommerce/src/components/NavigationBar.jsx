@@ -1,6 +1,7 @@
 import React from "react";
 import useFetch from "../hooks/useFetch.js";
 import Button from "./Button.jsx";
+import PropTypes from "prop-types";
 
 const NavigationBar = ({ category, setCategory }) => {
   const {
@@ -28,6 +29,11 @@ const NavigationBar = ({ category, setCategory }) => {
       {errorMessage}
     </nav>
   );
+};
+
+NavigationBar.propTypes = {
+  category: PropTypes.string,
+  setCategory: PropTypes.func.isRequired,
 };
 
 export default NavigationBar;
