@@ -1,20 +1,25 @@
 import React, { useContext } from "react";
-import Favorite from "../components/Favorite";
 import ProductsList from "../components/ProductsList";
+import Spinner from "../components/Spinner";
 import { favoritesContext } from "../context/favoritesContext";
+import useFetch from "../hooks/useFetch";
 
 const Favorites = () => {
   const { favorites } = useContext(favoritesContext);
-  const products = favorites.map((favorite) => ({
-    id: favorite,
-  }));
 
+  const {
+    data: products,
+    isLoading,
+    errorMessage,
+  } = useFetch(`https://fakestoreapi.com/products/`, JSON.stringify(favorites));
+
+  console.log("Products", products);
   return (
     <div className="px-2">
       <h1 className="font-bold text-3xl mt-5 mb-5">Favorites</h1>
-      <ProductsList products={products}>
-        <Favorite />
-      </ProductsList>
+      {products && <ProductsList products={products}></ProductsList>}
+      {isLoading && <Spinner />}
+      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 };

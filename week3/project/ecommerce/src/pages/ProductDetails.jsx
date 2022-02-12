@@ -7,36 +7,41 @@ const ProductDetails = () => {
   const { id } = useParams();
 
   const {
-    data: product,
+    data: products,
     errorMessage,
     isLoading,
-  } = useFetch(`https://fakestoreapi.com/products/${id}`);
+  } = useFetch(`https://fakestoreapi.com/products/`, JSON.stringify([id]));
+
+  console.log(products);
 
   return (
     <div className="container mx-auto px-2">
       {isLoading && <Spinner />}
-      {product && (
+      {products && (
         <div className="sm:flex mt-20">
           <div className="sm:w-1/2">
-            <img src={product.image} alt="" />
+            <img src={products[0].image} alt="" />
           </div>
           <div className="px-4 sm:px-0 sm:w-1/2 sm:pl-6">
-            <h2 className="font-bold text-2xl mt-4">{product.title}</h2>
+            <h2 className="font-bold text-2xl mt-4">{products[0].title}</h2>
             <div className="flex justify-between mt-4 mb-2">
               <div className="font-semibold text-xl">
-                &euro; {product.price}{" "}
+                &euro; {products[0].price}{" "}
                 <span className="text-gray-400 text-sm">inclusief BTW</span>
               </div>
               <div className="mb-2">
-                <span> {product.rating.rate}</span>
-                <span className="text-gray-400"> {product.rating.count}</span>
+                <span> {products[0].rating.rate}</span>
+                <span className="text-gray-400">
+                  {" "}
+                  {products[0].rating.count}
+                </span>
               </div>
             </div>
             <p className="mb-4">
-              {product.description
+              {products[0].description
                 .charAt(0)
                 .toUpperCase()
-                .concat(product.description.slice(1))}
+                .concat(products[0].description.slice(1))}
             </p>
             <p></p>
           </div>

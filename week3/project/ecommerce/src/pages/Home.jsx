@@ -4,7 +4,6 @@ import NavigationBar from "../components/NavigationBar";
 import { useState } from "react";
 import useFetch from "../hooks/useFetch";
 import Spinner from "../components/Spinner";
-import ProductCard from "../components/ProductCard";
 
 const Home = () => {
   const [category, setCategory] = useState(null);
@@ -22,11 +21,7 @@ const Home = () => {
       <h1 className="font-bold text-3xl mt-5 mb-5">Products</h1>
       <NavigationBar category={category} setCategory={setCategory} />
       {isLoading && <Spinner />}
-      {products && (
-        <ProductsList products={products}>
-          <ProductCard />
-        </ProductsList>
-      )}
+      {products && <ProductsList products={products} />}
       {errorMessage}
     </div>
   );
