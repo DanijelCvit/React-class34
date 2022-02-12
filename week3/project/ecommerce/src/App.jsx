@@ -15,7 +15,6 @@ function App() {
   const [favorites, setFavorites] = useState([]);
 
   const addFavorite = (id) => {
-    console.log(id, favorites);
     setFavorites((prevFavorites) => [...prevFavorites, id]);
   };
 
@@ -35,48 +34,16 @@ function App() {
           Favorites
         </NavLink>
       </nav>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <favoritesContext.Provider
-              value={{ favorites, addFavorite, removeFavorite }}
-            >
-              <Home />
-            </favoritesContext.Provider>
-          }
-        />
-        <Route
-          path="/products/:id"
-          element={
-            <favoritesContext.Provider
-              value={{ favorites, addFavorite, removeFavorite }}
-            >
-              <ProductDetails />
-            </favoritesContext.Provider>
-          }
-        />
-        <Route
-          path="/favorites"
-          element={
-            <favoritesContext.Provider
-              value={{ favorites, addFavorite, removeFavorite }}
-            >
-              <Favorites />
-            </favoritesContext.Provider>
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <favoritesContext.Provider
-              value={{ favorites, addFavorite, removeFavorite }}
-            >
-              <Home />
-            </favoritesContext.Provider>
-          }
-        />
-      </Routes>
+      <favoritesContext.Provider
+        value={{ favorites, addFavorite, removeFavorite }}
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </favoritesContext.Provider>
     </Router>
   );
 }

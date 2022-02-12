@@ -1,6 +1,7 @@
 import React from "react";
 import useFetch from "../hooks/useFetch.js";
 import Button from "./Button.jsx";
+import PropTypes from "prop-types";
 
 const NavigationBar = ({ category, setCategory }) => {
   const {
@@ -13,7 +14,7 @@ const NavigationBar = ({ category, setCategory }) => {
     <nav>
       {isLoading && <p>Loading categories...</p>}
       {categories && (
-        <ul className="flex items-stretch space-x-1">
+        <ul className="grid gap-2 grid-cols-2 sm:grid-cols-none sm:flex">
           {categories.map((categoryItem) => (
             <li key={categoryItem}>
               <Button
@@ -28,6 +29,11 @@ const NavigationBar = ({ category, setCategory }) => {
       {errorMessage}
     </nav>
   );
+};
+
+NavigationBar.propTypes = {
+  category: PropTypes.string,
+  setCategory: PropTypes.func.isRequired,
 };
 
 export default NavigationBar;

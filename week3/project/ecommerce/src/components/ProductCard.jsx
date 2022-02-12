@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { favoritesContext } from "../context/favoritesContext";
+import PropTypes from "prop-types";
 
 const ProductCard = ({ product }) => {
   const { favorites, addFavorite, removeFavorite } =
@@ -8,7 +9,7 @@ const ProductCard = ({ product }) => {
   const isFavorite = favorites.includes(product.id);
 
   return (
-    <div className="text-center mt-6 relative">
+    <div className="text-center mt-6 relative pr-8">
       <img
         src={product.image}
         alt=""
@@ -37,6 +38,10 @@ const ProductCard = ({ product }) => {
       </h2>
     </div>
   );
+};
+
+ProductCard.propTypes = {
+  product: PropTypes.object,
 };
 
 export default ProductCard;
