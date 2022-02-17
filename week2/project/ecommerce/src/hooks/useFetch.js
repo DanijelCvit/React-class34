@@ -14,7 +14,7 @@ const useFetch = (url) => {
         setData(data);
         setErrorMessage(null);
       } catch (error) {
-        setErrorMessage(error.message);
+        setErrorMessage(`Error:${error?.message}`);
       } finally {
         setIsLoading(false);
       }

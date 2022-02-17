@@ -5,7 +5,7 @@ const ProductCard = ({ product }) => (
   <div className="text-center mt-6">
     <img
       src={product.image}
-      alt=""
+      alt={product.description}
       className="mx-auto mb-2 h-72 object-contain"
     />
     <h2 className="text-ellipsis overflow-hidden whitespace-nowrap">
@@ -15,7 +15,11 @@ const ProductCard = ({ product }) => (
 );
 
 ProductCard.propTypes = {
-  product: PropTypes.object,
+  product: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default ProductCard;
