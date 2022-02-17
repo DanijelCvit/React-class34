@@ -5,7 +5,7 @@ const ProductCard = ({ product }) => (
   <div className="text-center mt-6">
     <img
       src={product.image}
-      alt={product.description}
+      alt={product.title}
       className="mx-auto mb-2 h-72 object-contain"
     />
     <h2 className="text-ellipsis overflow-hidden whitespace-nowrap">

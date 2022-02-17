@@ -1,142 +1,31 @@
-// import fetchMock from "jest-fetch-mock";
-// import {
-//   render,
-//   screen,
-//   waitForElementToBeRemoved,
-// } from "@testing-library/react";
-// import userEvent from "@testing-library/user-event";
-// import App from "./App";
-
-// const categories = [
-//   "electronics",
-//   "jewelery",
-//   "men's clothing",
-//   "women's clothing",
-// ];
-// const products = [
-//   {
-//     category: "men's clothing",
-//     description:
-//       "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-//     id: 1,
-//     image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-//     title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-//   },
-// ];
-
-// jest.setTimeout(30000);
-
-// describe("Loading and showing products", () => {
-//   it("should show the Loading text when the component is still loading", async () => {
-//     render(<App />);
-
-//     expect(screen.getByText("Loading categories...")).toBeInTheDocument();
-//     expect(screen.getByRole("status")).toBeInTheDocument();
-
-//     await screen.findByText(products[0].title);
-//   });
-
-//   it("should show the product the fetch returns", async () => {
-// fetch.mockResponseOnce(testSuccessfulResponse);
-
-//     render(<App />);
-
-//     expect(await screen.findByText(products[0].title)).toBeInTheDocument();
-//   });
-// });
-
-// describe("Error handling", () => {
-//   beforeEach(() => {
-//     enableFetchMocks();
-//   });
-
-//   afterEach(() => {
-//     disableFetchMocks();
-//   });
-
-//   it("should show an error message if the fetch fails", async () => {
-//     fetch.mockReject();
-
-//     render(<App />);
-
-//     const errors = await screen.findAllByText(/Error:/i);
-//     for (const error of errors) {
-//       expect(error).toBeInTheDocument();
-//     }
-//   });
-// });
-
-// describe("Selecting categories", () => {
-//   beforeEach(() => {
-//     fetch.resetMocks();
-//     fetchMock.mockIf((req) => {
-// console.log(req);
-//       if (req.pathname === "/products") {
-//         return {
-//           status: 200,
-//           body: JSON.stringify(products),
-//           headers: { "content-type": "application/json" },
-//         };
-//       } else if (req.pathname === "/products/categories") {
-//         return {
-//           status: 200,
-//           body: JSON.stringify(categories),
-//           headers: { "content-type": "application/json" },
-//         };
-//       }
-//     });
-//   });
-
-//   it("should show the selected category", async () => {
-//     render(<App />);
-
-// await screen.findByText(products[0].title);
-
-// expect(await screen.findByText(products[0].title)).toBeInTheDocument();
-//     await waitForElementToBeRemoved(screen.queryByTestId("spinner"), {
-//       timeout: 10000,
-//     });
-
-// for (const category of categories) {
-//     userEvent.click(screen.getByText("electronics"));
-
-//     await waitForElementToBeRemoved(screen.queryByTestId("spinner"), {
-//       timeout: 10000,
-//     });
-
-//     const listItems = screen.getAllByTestId(/.*/);
-
-//     console.log(listItems.length);
-
-// for (const item of listItems) {
-//   expect(item).toHaveAttribute("data-testid", "electronics");
-// }
-// }
-
-// for (const category of categories) {
-// const categoryButton = screen.getByText("electronics");
-
-// fireEvent.click(categoryButton);
-
-// const listItems = await screen.findAllByTestId(/.*/);
-
-// expect(listItems[0]).toHaveAttribute("data-testid", "electronics");
-
-// screen.debug();
-
-// for (const item of listItems) {
-//   expect(item).toHaveAttribute("data-testid", category);
-// }
-// }
-//   });
-// });
-
-import { render, screen } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import App from "./App";
 
 const testProducts = [
+  {
+    category: "electronics",
+    description:
+      "USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity; Compatibility Formatted NTFS for Windows 10, Windows 8.1, Windows 7; Reformatting may be required for other operating systems; Compatibility may vary depending on user’s hardware configuration and operating system",
+    id: 9,
+    image: "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg",
+    title: "WD 2TB Elements Portable External Hard Drive - USB 3.0",
+  },
+  {
+    category: "jewelery",
+    description:
+      "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
+    id: 5,
+    image: "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    title:
+      "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
+  },
   {
     category: "men's clothing",
     description:
@@ -144,6 +33,14 @@ const testProducts = [
     id: 1,
     image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
     title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+  },
+  {
+    category: "women's clothing",
+    description:
+      "Note:The Jackets is US standard size, Please choose size as your usual wear Material: 100% Polyester; Detachable Liner Fabric: Warm Fleece. Detachable Functional Liner: Skin Friendly, Lightweigt and Warm.Stand Collar Liner jacket, keep you warm in cold weather. Zippered Pockets: 2 Zippered Hand Pockets, 2 Zippered Pockets on Chest (enough to keep cards or keys)and 1 Hidden Pocket Inside.Zippered Hand Pockets and Hidden Pocket keep your things secure. Humanized Design: Adjustable and Detachable Hood and Adjustable cuff to prevent the wind and water,for a comfortable fit. 3 in 1 Detachable Design provide more convenience, you can separate the coat and inner as needed, or wear it together. It is suitable for different season and help you adapt to different climates",
+    id: 15,
+    image: "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
+    title: "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats",
   },
 ];
 
@@ -154,22 +51,41 @@ const testCategories = [
   "women's clothing",
 ];
 
-const handlers = [
+const successHandlers = [
   rest.get("https://fakestoreapi.com/products/categories", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ testCategories }));
+    return res(ctx.json(testCategories));
   }),
   rest.get("https://fakestoreapi.com/products", (req, res, ctx) => {
-    return res(ctx.json({ testProducts }));
+    return res(ctx.json(testProducts));
   }),
 ];
 
-const server = setupServer(...handlers);
+const errorHandlers = [
+  rest.get("https://fakestoreapi.com/products/categories", (req, res, ctx) => {
+    return res(ctx.status(500).json({ message: "Internal Server Error" }));
+  }),
+  rest.get("https://fakestoreapi.com/products", (req, res, ctx) => {
+    return res(ctx.status(500).json({ message: "Internal Server Error" }));
+  }),
+];
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+const categoryHandler = rest.get(
+  `https://fakestoreapi.com/products/category/:category`,
+  (req, res, ctx) => {
+    const { category } = req.params;
+    return res(
+      ctx.json(testProducts.filter((product) => product.category === category))
+    );
+  }
+);
+
+const server = setupServer(...successHandlers);
 
 describe("App", () => {
+  beforeAll(() => server.listen());
+  afterEach(() => server.resetHandlers());
+  afterAll(() => server.close());
+
   it("Test that the app is loading initially", async () => {
     render(<App />);
 
@@ -183,5 +99,33 @@ describe("App", () => {
     render(<App />);
 
     expect(await screen.findByText(testProducts[0].title)).toBeInTheDocument();
+  });
+
+  it("Test that the app returns error", async () => {
+    server.use(...errorHandlers);
+
+    render(<App />);
+
+    const errorElem = await screen.findByText("Error: Network request failed");
+
+    expect(errorElem).toBeInTheDocument();
+  });
+
+  it("Test that products are filtered by category", async () => {
+    server.use(...successHandlers, categoryHandler);
+
+    render(<App />);
+
+    await screen.findByText(testProducts[0].title);
+
+    for (const category of testCategories) {
+      userEvent.click(screen.getByText(category));
+
+      await waitForElementToBeRemoved(() => screen.queryByTestId("spinner"));
+
+      const products = screen.getAllByTestId(/.*/);
+      expect(products.length).toEqual(1);
+      expect(products[0]).toHaveAttribute("data-testid", category);
+    }
   });
 });
