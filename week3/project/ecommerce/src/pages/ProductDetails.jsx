@@ -1,5 +1,5 @@
-import React from "react";
 import { useParams } from "react-router-dom";
+import FavoriteButton from "../components/FavoriteButton";
 import Spinner from "../components/Spinner";
 import useFetch from "../hooks/useFetch";
 
@@ -11,8 +11,6 @@ const ProductDetails = () => {
     errorMessage,
     isLoading,
   } = useFetch(`https://fakestoreapi.com/products/`, JSON.stringify([id]));
-
-  console.log(products);
 
   return (
     <div className="container mx-auto px-2">
@@ -26,13 +24,15 @@ const ProductDetails = () => {
             <h2 className="font-bold text-2xl mt-4">{products[0].title}</h2>
             <div className="flex justify-between mt-4 mb-2">
               <div className="font-semibold text-xl">
-                &euro; {products[0].price}{" "}
-                <span className="text-gray-400 text-sm">inclusief BTW</span>
+                &euro; {products[0].price}
+                <span className="pl-1 pr-4 text-gray-400 text-sm">
+                  VAT included
+                </span>
+                <FavoriteButton id={id} />
               </div>
               <div className="mb-2">
                 <span> {products[0].rating.rate}</span>
-                <span className="text-gray-400">
-                  {" "}
+                <span className="pl-1 text-gray-400">
                   {products[0].rating.count}
                 </span>
               </div>
@@ -43,7 +43,6 @@ const ProductDetails = () => {
                 .toUpperCase()
                 .concat(products[0].description.slice(1))}
             </p>
-            <p></p>
           </div>
         </div>
       )}

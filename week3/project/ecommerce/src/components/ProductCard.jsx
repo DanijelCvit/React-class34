@@ -1,38 +1,18 @@
-import React, { useContext } from "react";
-import { favoritesContext } from "../context/favoritesContext";
 import PropTypes from "prop-types";
+import FavoriteButton from "./FavoriteButton";
 
 const ProductCard = ({ product }) => {
-  const { favorites, addFavorite, removeFavorite } =
-    useContext(favoritesContext);
-
-  const isFavorite = favorites.includes(product.id);
-
   return (
     <div className="text-center mt-6 relative pr-8">
       <img
         src={product.image}
-        alt=""
+        alt={product.title}
         className="mx-auto mb-2 h-72"
         style={{ objectFit: "contain" }}
       />
-      {isFavorite ? (
-        <i
-          onClick={(e) => {
-            e.preventDefault();
-            removeFavorite(product.id);
-          }}
-          className="fas fa-heart fa-lg absolute top-2 right-2"
-        ></i>
-      ) : (
-        <i
-          onClick={(e) => {
-            e.preventDefault();
-            addFavorite(product.id);
-          }}
-          className="far fa-heart fa-lg absolute top-2 right-2"
-        ></i>
-      )}
+      <div className="absolute top-2 right-2">
+        <FavoriteButton id={product.id} />
+      </div>
       <h2 className="text-ellipsis overflow-hidden whitespace-nowrap">
         {product.title}
       </h2>
@@ -41,7 +21,11 @@ const ProductCard = ({ product }) => {
 };
 
 ProductCard.propTypes = {
-  product: PropTypes.object,
+  product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default ProductCard;

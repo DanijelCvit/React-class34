@@ -1,9 +1,9 @@
 import React from "react";
 import useFetch from "../hooks/useFetch.js";
-import Button from "./Button.jsx";
+import CategoryButton from "./CategoryButton.jsx";
 import PropTypes from "prop-types";
 
-const NavigationBar = ({ category, setCategory }) => {
+const NavigationBar = ({ selectedCategory, setSelectedCategory }) => {
   const {
     data: categories,
     errorMessage,
@@ -17,9 +17,9 @@ const NavigationBar = ({ category, setCategory }) => {
         <ul className="grid gap-2 grid-cols-2 sm:grid-cols-none sm:flex">
           {categories.map((categoryItem) => (
             <li key={categoryItem}>
-              <Button
-                category={category}
-                setCategory={setCategory}
+              <CategoryButton
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
                 categoryItem={categoryItem}
               />
             </li>
@@ -32,8 +32,8 @@ const NavigationBar = ({ category, setCategory }) => {
 };
 
 NavigationBar.propTypes = {
-  category: PropTypes.string,
-  setCategory: PropTypes.func.isRequired,
+  selectedCategory: PropTypes.string,
+  setSelectedCategory: PropTypes.func.isRequired,
 };
 
 export default NavigationBar;

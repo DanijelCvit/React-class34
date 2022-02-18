@@ -13,7 +13,6 @@ const Favorites = () => {
     errorMessage,
   } = useFetch(`https://fakestoreapi.com/products/`, JSON.stringify(favorites));
 
-  console.log("Products", products);
   return (
     <div className="px-2">
       <h1 className="font-bold text-3xl mt-5 mb-5">Favorites</h1>
