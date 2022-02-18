@@ -9,7 +9,7 @@ const ProductsList = ({ products }) => {
       <ul className="sm:flex sm:flex-wrap">
         {products.map((product) => (
           <li
-            data-testid={product.category}
+            data-testid={`category${product.category}`}
             className="sm:w-1/2 lg:w-1/3 2xl:w-1/4 px-2"
             key={product.id}
           >

@@ -17,6 +17,7 @@ const FavoriteButton = ({ id }) => {
             removeFavorite(ID);
           }}
           className="fas fa-heart fa-lg hover:cursor-pointer"
+          data-testid={`favorite${ID}`}
         ></i>
       ) : (
         <i
@@ -25,6 +26,7 @@ const FavoriteButton = ({ id }) => {
             addFavorite(ID);
           }}
           className="far fa-heart fa-lg hover:cursor-pointer"
+          data-testid={`favorite${ID}`}
         ></i>
       )}
     </>

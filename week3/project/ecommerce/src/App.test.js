@@ -79,13 +79,20 @@ const categoryHandler = rest.get(
   }
 );
 
+const productHandler = rest.get(
+  `https://fakestoreapi.com/products/:id`,
+  (req, res, ctx) => {
+    const id = parseInt(req.params.id);
+    return res(ctx.json(testProducts.filter((product) => product.id === id)));
+  }
+);
+
 const server = setupServer(...successHandlers);
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 describe("App", () => {
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
-
   it("Test that the app is loading initially", async () => {
     render(<App />);
 
@@ -123,9 +130,47 @@ describe("App", () => {
 
       await waitForElementToBeRemoved(() => screen.queryByTestId("spinner"));
 
-      const products = screen.getAllByTestId(/.*/);
+      const products = screen.getAllByTestId(/category/i);
+
       expect(products.length).toEqual(1);
-      expect(products[0]).toHaveAttribute("data-testid", category);
+      expect(products[0]).toHaveAttribute("data-testid", `category${category}`);
     }
+  });
+});
+
+describe("Favorites", () => {
+  it("Test that the product is added to favorites", async () => {
+    server.use(...successHandlers, productHandler);
+
+    render(<App />);
+
+    await screen.findByText(testProducts[0].title);
+
+    userEvent.click(screen.getByTestId(`favorite${testProducts[0].id}`));
+
+    userEvent.click(screen.getByRole("link", { name: /favorites/i }));
+
+    expect(await screen.findByText(testProducts[0].title)).toBeInTheDocument();
+  });
+
+  it("Test that the product is removed from favorites", async () => {
+    server.use(...successHandlers, productHandler);
+    const productTitle = testProducts[0].title;
+
+    render(<App />);
+
+    userEvent.click(screen.getByRole("link", { name: /products/i }));
+
+    await waitForElementToBeRemoved(() => screen.queryByTestId("spinner"));
+
+    userEvent.click(screen.getByTestId(`favorite${testProducts[0].id}`));
+
+    userEvent.click(screen.getByRole("link", { name: /favorites/i }));
+
+    expect(await screen.findByText(productTitle)).toBeInTheDocument();
+
+    userEvent.click(screen.getByTestId(`favorite${testProducts[0].id}`));
+
+    expect(screen.queryByText(productTitle)).not.toBeInTheDocument();
   });
 });
