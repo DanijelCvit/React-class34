@@ -3,7 +3,7 @@ import useFetch from "../hooks/useFetch.js";
 import CategoryButton from "./CategoryButton.jsx";
 import PropTypes from "prop-types";
 
-const NavigationBar = ({ selectedCategory, setSelectedCategory }) => {
+const NavigationBar = ({ selectedCategory, handleSelectedCategory }) => {
   const {
     data: categories,
     errorMessage,
@@ -19,7 +19,7 @@ const NavigationBar = ({ selectedCategory, setSelectedCategory }) => {
             <li key={categoryItem}>
               <CategoryButton
                 selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
+                handleSelectedCategory={handleSelectedCategory}
                 categoryItem={categoryItem}
               />
             </li>
@@ -33,7 +33,7 @@ const NavigationBar = ({ selectedCategory, setSelectedCategory }) => {
 
 NavigationBar.propTypes = {
   selectedCategory: PropTypes.string,
-  setSelectedCategory: PropTypes.func.isRequired,
+  handleSelectedCategory: PropTypes.func.isRequired,
 };
 
 export default NavigationBar;

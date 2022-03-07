@@ -14,6 +14,13 @@ const Home = () => {
     url += `/category/${selectedCategory}`;
   }
 
+  const handleSelectedCategory = (category) => {
+    if (category === selectedCategory) {
+      return setSelectedCategory(null);
+    }
+    setSelectedCategory(category);
+  };
+
   const { data: products, errorMessage, isLoading } = useFetch(url);
 
   return (
@@ -21,7 +28,7 @@ const Home = () => {
       <h1 className="font-bold text-3xl mt-5 mb-5">Products</h1>
       <NavigationBar
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        handleSelectedCategory={handleSelectedCategory}
       />
       {isLoading && <Spinner />}
       {products && <ProductsList products={products} />}

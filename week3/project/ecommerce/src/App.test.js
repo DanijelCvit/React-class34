@@ -146,7 +146,7 @@ describe("Favorites", () => {
 
     await screen.findByText(testProducts[0].title);
 
-    userEvent.click(screen.getByTestId(`favorite${testProducts[0].id}`));
+    userEvent.click(screen.getByLabelText(`favorite${testProducts[0].id}`));
 
     userEvent.click(screen.getByRole("link", { name: /favorites/i }));
 
@@ -163,13 +163,13 @@ describe("Favorites", () => {
 
     await waitForElementToBeRemoved(() => screen.queryByTestId("spinner"));
 
-    userEvent.click(screen.getByTestId(`favorite${testProducts[0].id}`));
+    userEvent.click(screen.getByLabelText(`favorite${testProducts[0].id}`));
 
     userEvent.click(screen.getByRole("link", { name: /favorites/i }));
 
     expect(await screen.findByText(productTitle)).toBeInTheDocument();
 
-    userEvent.click(screen.getByTestId(`favorite${testProducts[0].id}`));
+    userEvent.click(screen.getByLabelText(`favorite${testProducts[0].id}`));
 
     expect(screen.queryByText(productTitle)).not.toBeInTheDocument();
   });

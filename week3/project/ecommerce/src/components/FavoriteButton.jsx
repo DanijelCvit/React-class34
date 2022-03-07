@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { favoritesContext } from "../context/favoritesContext";
+import { FavoritesContext } from "../context/favoritesContext";
 
 const FavoriteButton = ({ id }) => {
   const { favorites, addFavorite, removeFavorite } =
-    useContext(favoritesContext);
+    useContext(FavoritesContext);
 
   const ID = parseInt(id);
 
@@ -11,23 +11,29 @@ const FavoriteButton = ({ id }) => {
   return (
     <>
       {isFavorite ? (
-        <i
+        <button
           onClick={(e) => {
             e.preventDefault();
             removeFavorite(ID);
           }}
-          className="fas fa-heart fa-lg hover:cursor-pointer"
-          data-testid={`favorite${ID}`}
-        ></i>
+        >
+          <i
+            className="fas fa-heart fa-lg hover:cursor-pointer"
+            aria-label={`favorite${ID}`}
+          ></i>
+        </button>
       ) : (
-        <i
+        <button
           onClick={(e) => {
             e.preventDefault();
             addFavorite(ID);
           }}
-          className="far fa-heart fa-lg hover:cursor-pointer"
-          data-testid={`favorite${ID}`}
-        ></i>
+        >
+          <i
+            className="far fa-heart fa-lg hover:cursor-pointer"
+            aria-label={`favorite${ID}`}
+          ></i>
+        </button>
       )}
     </>
   );
