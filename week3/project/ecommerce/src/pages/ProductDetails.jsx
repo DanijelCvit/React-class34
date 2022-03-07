@@ -24,13 +24,14 @@ const ProductDetails = () => {
             <h2 className="font-bold text-2xl mt-4">{products[0].title}</h2>
             <div className="flex justify-between mt-4 mb-2">
               <div className="font-semibold text-xl">
-                &euro; {products[0].price}
+                &euro; {products[0].price.toFixed(2)}
                 <span className="pl-1 pr-4 text-gray-400 text-sm">
                   VAT included
                 </span>
                 <FavoriteButton id={id} />
               </div>
               <div className="mb-2">
+                <h3>Rating</h3>
                 <span> {products[0].rating.rate}</span>
                 <span className="pl-1 text-gray-400">
                   {products[0].rating.count}
